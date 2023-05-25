@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/26 02:15:22 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/26 02:38:11 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**create_map_array(char *mapfile, int rowcount)
 }
 
 /* check map values */
-bool	check_char(char c)
+bool	check_component(char c)
 {
 	if (c == '0' || c == '1' || c == 'C' || c == 'E' || c == 'P' )
 		return (true);
@@ -120,31 +120,15 @@ bool	check_char(char c)
 		return (false);
 }
 
-/*void component_count(char *mapfile, char c, t_mapcheckerdata data)
+void component_count(char c, t_mapcheckerdata data)
 {
-	int fd;
-	int readcount;
-	char	c;
-
-	fd = open(mapfile, O_RDONLY);
-	while (1)
-	{
-		readcount = read(fd, &c, 1);
-		if (readcount == 0)
-			break;
-		if (readcount < 0)
-			return (-1);
-		if (c == '\n')
-			linecount++;
-	}
-	close(fd);
-}if (c == 'C')
+	if (c == 'C')
 		data.n_collect++;
-	if (c == 'E')
+	else if (c == 'E')
 		data.n_exit++;
-	if (c == 'P')
+	else if (c == 'P')
 		data.n_player++;
-}*/
+}
 
 bool	check_border(char c, int width, int height, int point_x, int point_y)
 {
@@ -156,13 +140,26 @@ bool	check_border(char c, int width, int height, int point_x, int point_y)
 	return (true);
 }
 
-void	check_map_all(t_mapcheckerdata maparray)
+void	check_map_all(char **maparray, t_mapcheckerdata data)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (i < )
+	while (i < data.height)
+	{
+		j = 0;
+		while (j < data.width)
+		{
+			if (!check_component(maparray[i][j])
+				error("Invalid character in map. Please use only 1, 0, P, E, C");
+			if (!check_border(maparray[i][j], data.width, data.height, i, j))
+				error("Check that map border contains all 1s");
+			component_count(maparray[i][j], data);
+		}
+		j++;
+	}
+	i++;
 }
 
 int	main(void)
