@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/26 02:38:11 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/27 02:08:25 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,14 @@ void	check_filetype(int argc, char *mapfile)
 	int	len;
 
 	if (argc != 2)
-		error("Please inlcude 1 .ber map file as an argument.\n"));
+		error("Please inlcude 1 .ber map file as an argument.\n");
 
 	else if (argc == 2)
 	{
-		len = ft_strlen(mapfile);
+		len = strlen(mapfile);
 		if (strcmp(&mapfile[len - 4], ".ber") != 0)
-			error("Invalid map file. Use a .ber file\n"));
+			error("Invalid map file. Use a .ber file\n");
 	}
-	return (true);
 }
 
 /* create 2d array from .ber file */
@@ -124,15 +123,15 @@ void component_count(char c, t_mapcheckerdata data)
 {
 	if (c == 'C')
 		data.n_collect++;
-	else if (c == 'E')
+	if (c == 'E')
 		data.n_exit++;
-	else if (c == 'P')
+	if (c == 'P')
 		data.n_player++;
 }
 
 bool	check_border(char c, int width, int height, int point_x, int point_y)
 {
-	if (point_x == 0 || point_y == 0 || point_x == width - 1 || point_y == height - 1)
+	if (point_x == 0 || point_y == 0 || point_x == height - 1 || point_y == width - 1)
 	{
 		if (c != '1')
 			return (false);
@@ -151,15 +150,16 @@ void	check_map_all(char **maparray, t_mapcheckerdata data)
 		j = 0;
 		while (j < data.width)
 		{
-			if (!check_component(maparray[i][j])
+			if (!check_component(maparray[i][j]))
 				error("Invalid character in map. Please use only 1, 0, P, E, C");
 			if (!check_border(maparray[i][j], data.width, data.height, i, j))
 				error("Check that map border contains all 1s");
+			printf("point = %c\n", maparray[i][j]);
 			component_count(maparray[i][j], data);
+			j++;
 		}
-		j++;
+		i++;
 	}
-	i++;
 }
 
 int	main(void)
@@ -167,14 +167,13 @@ int	main(void)
 	char **maparray;
 	int	rowcount;
 
-	if (check_filetype(2, "./test.ber"))
-		printf("File type correct!\n");
+	check_filetype(2, "./test.ber");
 	rowcount = count_rows("./test.ber");
 	printf("Line count: %d\n", rowcount);
 	maparray = create_map_array("./test.ber", rowcount);
 
 	t_mapcheckerdata data;
-	data.width = ft_strlen(maparray[0]);
+	data.width = strlen(maparray[0]) - 1;
 	data.height = count_rows("./test.ber");
 	data.point_x = 0;
 	data.point_y = 0;
@@ -182,7 +181,10 @@ int	main(void)
 	data.n_exit = 0;
 	data.n_collect = 0;
 
-	printf("maparray[0][0] = %c\n", maparray[0][0]);
+	printf("data.width: %d\n", data.width);
+	printf("data.height: %d\n", data.height);
+
+	/*printf("maparray[0][0] = %c\n", maparray[0][0]);
 	printf("maparray[0][1] = %c\n", maparray[0][1]);
 	printf("maparray[0][2] = %c\n", maparray[0][2]);
 	printf("maparray[0][3] = %c\n", maparray[0][3]);
@@ -200,14 +202,21 @@ int	main(void)
 	printf("maparray[2][1] = %c\n", maparray[2][1]);
 	printf("\n");
 
-	printf("maparray[3][0] = %c\n", maparray[3][0]);
-	/*printf("data.bplayer before CHECKONE: %d\n", data.b_player);
-	check_one(maparray[0][1], '1', &data.b_player);
-	printf("data.bplayer after CHECKONE: %d\n", data.b_player);*/
-	printf("data.width: %d\n", data.width);
-	printf("data.height: %d\n", data.height);
-	printf("data.point_x: %d\n", data.point_x);
-	printf("map[0] = %s\n", maparray[0]);
+	printf("maparray[3][0] = %c\n", maparray[3][0]);*/
+
+	check_map_all(maparray, data);
+
+	printf("data.n_player: %d\n", data.n_player);
+	printf("data.n_exit: %d\n", data.n_exit);
+	printf("data.n_collect: %d\n", data.n_collect);
+
+
+	printf("map[0] = %s", maparray[0]);
+	printf("map[1] = %s", maparray[1]);
+	printf("map[2] = %s", maparray[2]);
+	printf("map[3] = %s", maparray[3]);
+	printf("map[4] = %s\n", maparray[4]);
+
 
 
   	return 0;
