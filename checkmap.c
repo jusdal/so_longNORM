@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/27 02:08:25 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/27 17:00:49 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ typedef	struct s_mapcheckerdata
 {
 	int	width;
 	int	height;
-	int	point_x;
-	int	point_y;
+	int	point_row;
+	int	point_column;
 	int	n_player;
 	int	n_exit;
 	int	n_collect;
@@ -119,19 +119,19 @@ bool	check_component(char c)
 		return (false);
 }
 
-void component_count(char c, t_mapcheckerdata data)
+void component_count(char c, t_mapcheckerdata *data)
 {
 	if (c == 'C')
-		data.n_collect++;
+		data->n_collect++;
 	if (c == 'E')
-		data.n_exit++;
+		data->n_exit++;
 	if (c == 'P')
-		data.n_player++;
+		data->n_player++;
 }
 
-bool	check_border(char c, int width, int height, int point_x, int point_y)
+bool	check_border(char c, int width, int height, int row, int column)
 {
-	if (point_x == 0 || point_y == 0 || point_x == height - 1 || point_y == width - 1)
+	if (row == 0 || column == 0 || row == height - 1 || column == width - 1)
 	{
 		if (c != '1')
 			return (false);
@@ -139,26 +139,26 @@ bool	check_border(char c, int width, int height, int point_x, int point_y)
 	return (true);
 }
 
-void	check_map_all(char **maparray, t_mapcheckerdata data)
+void	check_map_all(char **maparray, t_mapcheckerdata *data)
 {
-	int i;
-	int j;
+	int column;
+	int row;
 
-	i = 0;
-	while (i < data.height)
+	row = 0;
+	while (row < data->height)
 	{
-		j = 0;
-		while (j < data.width)
+		column = 0;
+		while (column < data->width)
 		{
-			if (!check_component(maparray[i][j]))
+			printf("point = %c\n", maparray[row][column]);
+			if (!check_component(maparray[row][column]))
 				error("Invalid character in map. Please use only 1, 0, P, E, C");
-			if (!check_border(maparray[i][j], data.width, data.height, i, j))
+			if (!check_border(maparray[row][column], data->width, data->height, row, column))
 				error("Check that map border contains all 1s");
-			printf("point = %c\n", maparray[i][j]);
-			component_count(maparray[i][j], data);
-			j++;
+			component_count(maparray[row][column], data);
+			column++;
 		}
-		i++;
+		row++;
 	}
 }
 
@@ -172,17 +172,17 @@ int	main(void)
 	printf("Line count: %d\n", rowcount);
 	maparray = create_map_array("./test.ber", rowcount);
 
-	t_mapcheckerdata data;
-	data.width = strlen(maparray[0]) - 1;
-	data.height = count_rows("./test.ber");
-	data.point_x = 0;
-	data.point_y = 0;
-	data.n_player = 0;
-	data.n_exit = 0;
-	data.n_collect = 0;
+	t_mapcheckerdata *data = malloc(sizeof(t_mapcheckerdata));
+	data->width = strlen(maparray[0]) - 1;
+	data->height = count_rows("./test.ber");
+	data->point_row = 0;
+	data->point_column = 0;
+	data->n_player = 0;
+	data->n_exit = 0;
+	data->n_collect = 0;
 
-	printf("data.width: %d\n", data.width);
-	printf("data.height: %d\n", data.height);
+	printf("data.width: %d\n", data->width);
+	printf("data.height: %d\n", data->height);
 
 	/*printf("maparray[0][0] = %c\n", maparray[0][0]);
 	printf("maparray[0][1] = %c\n", maparray[0][1]);
@@ -206,9 +206,9 @@ int	main(void)
 
 	check_map_all(maparray, data);
 
-	printf("data.n_player: %d\n", data.n_player);
-	printf("data.n_exit: %d\n", data.n_exit);
-	printf("data.n_collect: %d\n", data.n_collect);
+	printf("data.n_player: %d\n", data->n_player);
+	printf("data.n_exit: %d\n", data->n_exit);
+	printf("data.n_collect: %d\n", data->n_collect);
 
 
 	printf("map[0] = %s", maparray[0]);
