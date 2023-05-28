@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/28 00:55:48 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/28 01:56:41 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,9 @@ void	check_map_all(char **maparray, t_mapdata *data)
 	}
 	component_check(data, maparray);
 }
+
+/* check valid path using flood fill*/
+
 
 int	main(int argc, char *argv[])
 {
