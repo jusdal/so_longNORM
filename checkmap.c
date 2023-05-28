@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42bangkok.com>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/28 01:56:41 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/29 00:01:19 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "gnl/get_next_line.h"
+#include "get_next_line.h"
+#include "so_long.h"
 
-/* define data types and structs */
+/* define data types and structs
 typedef struct s_vector
 {
 	int	x;
@@ -35,7 +36,7 @@ typedef	struct s_mapdata
 	int		n_player;
 	int		n_exit;
 	int		n_collect;
-}	t_mapdata;
+}	t_mapdata;*/
 
 /* helper functions */
 void	error(char *message)
@@ -43,24 +44,28 @@ void	error(char *message)
 	printf("%s\n", message);
 	exit(EXIT_FAILURE);
 }
-void free_error(char *message, char** array, t_mapdata *data)
+
+void	free_array(char **array)
 {
-	int i = 0;
+	int	i;
 
-	printf("%s\n", message);
-	//free the array
-	while (i < data->height)
+	i = 0;
+	while (array[i])
 	{
-			free(array[i]);
-			i++;
+		free(array[i]);
+		i++;
 	}
-
 	free(array);
-	exit(EXIT_FAILURE);
 }
+void	free_error(char *message, char **array)
+{
+	free_array(array);
+	error(message);
+}
+
 int	strlen_no_newline(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != '\0' && str[i] != '\n')
@@ -84,9 +89,9 @@ void	check_filetype(int argc, char *mapfile)
 /* create 2d array from .ber file */
 int	count_rows(char *mapfile)
 {
-	int fd;
-	int readcount;
-	int rowcount;
+	int		fd;
+	int		readcount;
+	int		rowcount;
 	char	c;
 
 	rowcount = 1;
@@ -95,7 +100,7 @@ int	count_rows(char *mapfile)
 	{
 		readcount = read(fd, &c, 1);
 		if (readcount == 0)
-			break;
+			break ;
 		if (readcount < 0)
 			return (-1);
 		if (c == '\n')
@@ -105,25 +110,26 @@ int	count_rows(char *mapfile)
 	return (rowcount);
 }
 
-char **alloc_map(char *mapfile, int rowcount)
+char	**alloc_map(char *mapfile, int rowcount)
 {
-	char **maparray;
+	char	**maparray;
 
-	//printf("LINECOUNT IN ALLOC FUNCTION = %d\n", rowcount);
-	if (rowcount <= 0)
+	(void)mapfile;
+	if (rowcount <= 2)
 		error("Map Error. Please check file.");
-	maparray = malloc(sizeof(char *) * rowcount + 1);
+	maparray = malloc(sizeof(char *) * (rowcount + 1));
 	if (!maparray)
-		return (0);
+		error("Malloc Error");
 	return (maparray);
 }
 
 char	**create_map_array(char *mapfile, int rowcount)
 {
-	char **map;
-	int fd;
-	int i = 0;
+	char	**map;
+	int		fd;
+	int 	i;
 
+	i = 0;
 	map = alloc_map(mapfile, rowcount);
 	fd = open(mapfile, O_RDONLY);
 	if (fd < 0)
@@ -159,30 +165,32 @@ bool	check_component(char c)
 		return (false);
 }
 
-void component_count(char c, t_mapdata *data, int row, int column)
+void	component_count(char c, t_mapdata *data, int row, int column)
 {
 	if (c == 'C')
 		data->n_collect++;
 	if (c == 'E')
+	{
 		data->n_exit++;
-		data->exit.x = row;
-		data->exit.y = column;
+		data->exit.x = column;
+		data->exit.y = row;
+	}
 	if (c == 'P')
 	{
 		data->n_player++;
-		data->player.x = row;
-		data->player.y = column;
+		data->player.x = column;
+		data->player.y = row;
 	}
 }
 
-void component_check(t_mapdata *data, char **maparray)
+void	component_check(t_mapdata *data, char **maparray)
 {
 	if (data->n_collect < 1)
-		free_error("Map must contain at least 1 collectable", maparray, data);
+		free_error("Map must contain at least 1 collectable", maparray);
 	if (data->n_player != 1)
-		free_error("Map must contain only 1 player", maparray, data);
+		free_error("Map must contain only 1 player", maparray);
 	if (data->n_exit != 1)
-		free_error("Map must contain only 1 exit", maparray, data);
+		free_error("Map must contain only 1 exit", maparray);
 }
 
 bool	check_border(char c, t_mapdata *data, int row, int column)
@@ -197,24 +205,24 @@ bool	check_border(char c, t_mapdata *data, int row, int column)
 
 void	check_map_all(char **maparray, t_mapdata *data)
 {
-	int column;
-	int row;
+	int	col;
+	int	row;
 
 	row = 0;
 	while (row < data->height)
 	{
 		if (strlen_no_newline(maparray[row]) != data->width)
-			free_error("Map must be rectangular", maparray, data);
-		column = 0;
-		while (column < data->width)
+			free_error("Map must be rectangular", maparray);
+		col = 0;
+		while (maparray[col])
 		{
 			//printf("point = %c\n", maparray[row][column]);
-			if (!check_component(maparray[row][column]))
-				free_error("Invalid character in map. Please use only 1, 0, P, E, C", maparray, data);
-			if (!check_border(maparray[row][column], data, row, column))
-				free_error("Check that map border contains all 1s", maparray, data);
-			component_count(maparray[row][column], data, row, column);
-			column++;
+			if (!check_component(maparray[row][col]))
+				free_error("Invalid character in map. Please use only 1, 0, P, E, C", maparray);
+			if (!check_border(maparray[row][col], data, row, col))
+				free_error("Check that map border contains all 1s", maparray);
+			component_count(maparray[row][col], data, row, col);
+			col++;
 		}
 		row++;
 	}
@@ -226,8 +234,8 @@ void	check_map_all(char **maparray, t_mapdata *data)
 
 int	main(int argc, char *argv[])
 {
-	char **maparray;
-	t_mapdata data;
+	char		**maparray;
+	t_mapdata	data;
 
 	check_filetype(argc, argv[1]);
 	maparray = create_map_array(argv[1], count_rows(argv[1]));
@@ -248,7 +256,10 @@ int	main(int argc, char *argv[])
 	printf("map[1] = %s", maparray[1]);
 	printf("map[2] = %s", maparray[2]);
 	printf("map[3] = %s", maparray[3]);
-	printf("map[4] = %s\n", maparray[4]);
+	printf("map[4] = %s", maparray[4]);
+	printf("map[5] = %s\n", maparray[5]);
 
-	return 0;
+	check_path(maparray, &data);
+	free_array(maparray);
+	return (0);
 }
