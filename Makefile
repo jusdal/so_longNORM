@@ -3,36 +3,47 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jdaly <jdaly@student.42bangkok.com>        +#+  +:+       +#+         #
+#    By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 22:02:56 by jdaly             #+#    #+#              #
-#    Updated: 2023/05/29 01:05:34 by jdaly            ###   ########.fr        #
+#    Updated: 2023/05/29 12:07:56 by jdaly            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = solong
-CC = cc
-CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address #-framework OpenGL -framework AppKit
+NAME = so_long
+CC = gcc
+CFLAGS = -Wall -Werror -Wextra
 
 
-SRC = 1checkmap.c floodfill.c get_next_line.c get_next_line_utils.c
+SRC = main.c 1checkmap.c floodfill.c get_next_line.c get_next_line_utils.c
 OBJ = $(SRC:.c=.o)
 
-# %.o: %.c
-# 	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
+MLX_DIR	:= ./mlx
+MINILIBX	:= $(MLX_DIR)/libmlx.a
+
+FRAME_W := -framework OpenGL -framework AppKit
+
+%.o: %.c
+	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $^ -o $@
+$(NAME): $(OBJ) $(MINILIBX)
+	$(CC) $(CFLAGS) $(OBJ) $(MINILIBX) -Lmlx -lmlx $(FRAME_W) -o $@
+
+$(MINILIBX):
+	$(MAKE) -C $(MLX_DIR)
 
 clean:
+	$(MAKE) -C $(MLX_DIR) clean
 	rm -f $(OBJ)
 
 fclean:
 	rm -f $(NAME)
 
-re: clean all
+re: fclean all
+
+.PHONY: all clean fclean re
 
  #put mlx in mlx folder
  #you need libmlx.dylib in the same directory as build target bc it's a dynamic library
