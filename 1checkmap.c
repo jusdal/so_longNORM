@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/29 03:33:23 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/29 11:58:01 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void	check_map_all(char **maparray, t_mapdata *data)
 /* check valid path using flood fill*/
 
 
-int	main(int argc, char *argv[])
+/*int	main(int argc, char *argv[])
 {
 	char		**maparray;
 	t_mapdata	data;
@@ -256,4 +256,17 @@ int	main(int argc, char *argv[])
 	check_path(maparray, &data);
 	free_array(maparray);
 	return (0);
-}
+
+    void *mlx_ptr;
+    void *win_ptr;
+
+    mlx_ptr = mlx_init();
+    if (!mlx_ptr)
+        error("Malloc Error\n");
+    win_ptr = mlx_new_window(mlx_ptr, 300, 300, "SOOOO LOOOONG!");
+    if (!win_ptr)
+        error("Malloc Error\n");
+    mlx_loop(mlx_ptr);
+    return (0);
+    
+}*/
