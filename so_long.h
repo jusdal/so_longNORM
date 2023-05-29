@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdaly <jdaly@student.42bangkok.com>        +#+  +:+       +#+        */
+/*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 01:08:23 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/29 00:11:21 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/29 12:12:07 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 
 # include "get_next_line.h"
 //# include "libft/libft.h"
+# include <fcntl.h>
+# include "mlx/mlx.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
-# include <fcntl.h>
+
 
 typedef struct s_vector
 {
@@ -47,5 +49,8 @@ void	free_error(char *message, char** array);
 void	fill(char **array, t_mapdata *data, int x, int y);
 void	ff_map(char **maparray, t_mapdata *data);
 void	check_path(char **maparray, t_mapdata *data);
+
+/* minilibx.c */
+
 
 #endif
