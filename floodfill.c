@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdaly <jdaly@student.42bangkok.com>        +#+  +:+       +#+        */
+/*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 00:01:39 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/29 00:08:08 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/30 18:04:35 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,18 @@ static char	*ft_strdup(char *str)
 	return (ret);
 }
 
-char	**dup_map(char **maparray, t_mapdata *data)
+char	**dup_map(t_mapdata *data)
 {
 	int		row;
 	char	**mapdup;
 
 	mapdup = malloc(sizeof(char *) * (data->height + 1));
 	if (!mapdup)
-		error("Malloc Error");
+		error("Malloc Error\n");
 	row = 0;
 	while (row < data->height)
 	{
-		mapdup[row] = ft_strdup(maparray[row]);
+		mapdup[row] = ft_strdup(data->maparray[row]);
 		row++;
 	}
 	mapdup[row] = 0;
@@ -64,19 +64,19 @@ void	fill(char **array, t_mapdata *data, int column, int row)
 	return ;
 }
 
-void	ff_map(char **maparray, t_mapdata *data)
+void	ff_map(char **array, t_mapdata *data)
 {
-	fill(maparray, data, data->player.x, data->player.y);
+	fill(array, data, data->player.x, data->player.y);
 }
 
-void	check_path(char **maparray, t_mapdata *data)
+void	check_path(t_mapdata *data)
 {
 	char	**mapdup;
 	int 	row;
 	int 	col;
 
 	//duplicate map
-	mapdup = dup_map(maparray, data);
+	mapdup = dup_map(data);
 
 	//fill duplicated map
 	ff_map(mapdup, data);
@@ -86,12 +86,12 @@ void	check_path(char **maparray, t_mapdata *data)
 	while (row < data->height)
 	{
 		col = 0;
-		while (maparray[col])
+		while (data->maparray[col])
 		{
 			if (mapdup[row][col] == 'C' || mapdup[row][col] == 'E')
 			{
 				free_array(mapdup);
-				free_error("No valid path. Please check map", maparray);
+				free_error("No valid path. Please check map\n", data->maparray);
 			}
 			col++;
 		}
