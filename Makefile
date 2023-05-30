@@ -6,7 +6,7 @@
 #    By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 22:02:56 by jdaly             #+#    #+#              #
-#    Updated: 2023/05/30 17:07:27 by jdaly            ###   ########.fr        #
+#    Updated: 2023/05/30 21:49:05 by jdaly            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 
 
-SRC = main.c 1checkmap.c floodfill.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c
+SRC = main.c 1checkmap.c floodfill.c 3renderwindow.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c
 OBJ = $(SRC:.c=.o)
 
 MLX_DIR	:= ./mlx
