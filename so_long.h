@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 01:08:23 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/30 18:00:47 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/30 23:14:57 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define SO_LONG_H
 
 # include "gnl/get_next_line.h"
-//# include "libft/libft.h"
 # include <fcntl.h>
 # include "mlx/mlx.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
+# include <stdio.h> //remove
 # include <string.h> //remove and replace strcmp in 1checkmap.c
 
 
@@ -27,7 +27,14 @@ typedef struct s_vector
 {
 	int	x;
 	int	y;
-} t_vec;
+}	t_vec;
+
+typedef struct s_img
+{
+	void	*img;
+	int		height;
+	int 	width;
+}	t_img;
 
 typedef	struct s_mapdata
 {
@@ -46,20 +53,44 @@ typedef struct s_game
 	void 		*mlx_ptr;
 	void 		*win_ptr;
 	t_mapdata	mapdata;
+	int			count;
+	t_vector	move;
+	t_img		img_floor;
+	t_img		img_player;
+	t_img		img_collect;
+	t_img		img_wall;
+	t_img		img_exit;
 
 }	t_game;
 
 /* mapchecker.c */
+void	ft_putstr(char *str);
 void	error(char *message);
 void	free_array(char **array);
 void	free_error(char *message, char** array);
+int		strlen_no_newline(char *str);
+void	check_filetype(int argc, char *mapfile);
+int		count_rows(char *mapfile);
+char	**alloc_map(char *mapfile, int rowcount);
+char	**create_map_array(char *mapfile, int rowcount);
+void	init_mapdata(t_mapdata *data, char *mapfile);
+bool	check_component(char c);
+void	component_count(char c, t_mapdata *data, int row, int column);
+void	component_check(t_mapdata *data);
+bool	check_border(char c, t_mapdata *data, int row, int column);
+void	check_map_all(t_mapdata *data);
+
 
 /* flood fill.c */
-void	fill(char **array, t_mapdata *data, int x, int y);
-void	ff_map(char **array, t_mapdata *data);
-void	check_path(t_mapdata *data);
+char		**dup_map(t_mapdata *data);
+void		fill(char **array, t_mapdata *data, int x, int y);
+void		ff_map(char **array, t_mapdata *data);
+void		check_path(t_mapdata *data);
 
-/* minilibx.c */
-
+/* renderwindow.c */
+void	create_images(t_game *gdata);
+void	init_gamedata(t_game *gdata, t_mapdata mdata);
+void    render_map(t_game *gdata);
+void    render(t_mapdata mapdata);
 
 #endif
