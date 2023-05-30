@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/30 18:04:18 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/30 21:43:00 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void	init_mapdata(t_mapdata *data, char *mapfile)
 
 bool	check_component(char c)
 {
-	if (c == '0' || c == '1' || c == 'C' || c == 'E' || c == 'P' )
+	if (c == '0' || c == '1' || c == 'C' || c == 'E' || c == 'P')
 		return (true);
 	else
 		return (false);
@@ -219,9 +219,8 @@ void	check_map_all(t_mapdata *data)
 /* check valid path using flood fill*/
 
 
-int	main(int argc, char *argv[])
+/*int	main(int argc, char *argv[])
 {
-	//char		**maparray;
 	t_mapdata	data;
 
 	check_filetype(argc, argv[1]);
@@ -249,4 +248,4 @@ int	main(int argc, char *argv[])
 	check_path(&data);
 	free_array(data.maparray);
 	return (0);
-}
+}*/
