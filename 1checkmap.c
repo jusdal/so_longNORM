@@ -6,11 +6,12 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/30 17:07:03 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/30 18:04:18 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+#include <stdio.h>
 
 /* helper functions */
 void	ft_putstr(char *str)
@@ -26,6 +27,7 @@ void	ft_putstr(char *str)
 }
 void	error(char *message)
 {
+	ft_putstr("Error\n");
 	ft_putstr(message);
 	exit(EXIT_FAILURE);
 }
@@ -131,12 +133,10 @@ char	**create_map_array(char *mapfile, int rowcount)
 }
 
 /* check map values */
-void	init_mapdata(t_mapdata *data, char **maparray, char *mapfile)
+void	init_mapdata(t_mapdata *data, char *mapfile)
 {
-	data->width = strlen_no_newline(maparray[0]);
+	data->width = strlen_no_newline(data->maparray[0]);
 	data->height = count_rows(mapfile);
-	data->point_row = 0;
-	data->point_column = 0;
 	data->n_player = 0;
 	data->n_exit = 0;
 	data->n_collect = 0;
@@ -168,16 +168,16 @@ void	component_count(char c, t_mapdata *data, int row, int column)
 	}
 }
 
-void	component_check(t_mapdata *data, char **maparray)
+void	component_check(t_mapdata *data)
 {
 	if (data->n_collect < 1)
-		free_error("Map must contain at least 1 collectable\n", maparray);
+		free_error("Map must contain at least 1 collectable\n", data->maparray);
 	if (data->n_player != 1)
-		free_error("Map must contain only 1 player\n", maparray);
+		free_error("Map must contain only 1 player\n", data->maparray);
 	if (data->n_exit < 1)
-		free_error("Map must contain 1 exit\n", maparray);
+		free_error("Map must contain 1 exit\n", data->maparray);
 	if (data->n_exit > 1)
-		free_error("Map must comtain only 1 exit\n", maparray);
+		free_error("Map must comtain only 1 exit\n", data->maparray);
 }
 
 bool	check_border(char c, t_mapdata *data, int row, int column)
@@ -190,7 +190,7 @@ bool	check_border(char c, t_mapdata *data, int row, int column)
 	return (true);
 }
 
-void	check_map_all(char **maparray, t_mapdata *data)
+void	check_map_all(t_mapdata *data)
 {
 	int	col;
 	int	row;
@@ -198,40 +198,40 @@ void	check_map_all(char **maparray, t_mapdata *data)
 	row = 0;
 	while (row < data->height)
 	{
-		if (strlen_no_newline(maparray[row]) != data->width)
-			free_error("Map must be rectangular\n", maparray);
+		if (strlen_no_newline(data->maparray[row]) != data->width)
+			free_error("Map must be rectangular\n", data->maparray);
 		col = 0;
 		while (col < data->width)
 		{
 			//printf("point[%d][%d] = %c\n", row, col, maparray[row][col]);
-			if (!check_component(maparray[row][col]))
-				free_error("Invalid character in map. Please use only 1, 0, P, E, C\n", maparray);
-			if (!check_border(maparray[row][col], data, row, col))
-				free_error("Check that map border contains all 1s\n", maparray);
-			component_count(maparray[row][col], data, row, col);
+			if (!check_component(data->maparray[row][col]))
+				free_error("Invalid character in map. Please use only 1, 0, P, E, C\n", data->maparray);
+			if (!check_border(data->maparray[row][col], data, row, col))
+				free_error("Check that map border contains all 1s\n", data->maparray);
+			component_count(data->maparray[row][col], data, row, col);
 			col++;
 		}
 		row++;
 	}
-	component_check(data, maparray);
+	component_check(data);
 }
 
 /* check valid path using flood fill*/
 
 
-/*int	main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
-	char		**maparray;
+	//char		**maparray;
 	t_mapdata	data;
 
 	check_filetype(argc, argv[1]);
-	maparray = create_map_array(argv[1], count_rows(argv[1]));
-	init_mapdata(&data, maparray, argv[1]);
+	data.maparray = create_map_array(argv[1], count_rows(argv[1]));
+	init_mapdata(&data, argv[1]);
 
 	printf("data.width: %d\n", data.width);
 	printf("data.height: %d\n", data.height);
 
-	check_map_all(maparray, &data);
+	check_map_all(&data);
 
 	printf("data.n_player: %d\n", data.n_player);
 	printf("data.n_exit: %d\n", data.n_exit);
@@ -239,27 +239,14 @@ void	check_map_all(char **maparray, t_mapdata *data)
 	printf("player is at [%d, %d]\n", data.player.x, data.player.y);
 	printf("exit is at [%d, %d]\n", data.exit.x, data.exit.y);
 
-	printf("map[0] = %s", maparray[0]);
-	printf("map[1] = %s", maparray[1]);
-	printf("map[2] = %s", maparray[2]);
-	printf("map[3] = %s", maparray[3]);
-	printf("map[4] = %s", maparray[4]);
-	printf("map[5] = %s\n", maparray[5]);
+	printf("map[0] = %s", data.maparray[0]);
+	printf("map[1] = %s", data.maparray[1]);
+	printf("map[2] = %s", data.maparray[2]);
+	printf("map[3] = %s", data.maparray[3]);
+	printf("map[4] = %s", data.maparray[4]);
+	printf("map[5] = %s\n", data.maparray[5]);
 
-	check_path(maparray, &data);
-	free_array(maparray);
+	check_path(&data);
+	free_array(data.maparray);
 	return (0);
-
-    void *mlx_ptr;
-    void *win_ptr;
-
-    mlx_ptr = mlx_init();
-    if (!mlx_ptr)
-        error("Malloc Error\n");
-    win_ptr = mlx_new_window(mlx_ptr, 300, 300, "SOOOO LOOOONG!");
-    if (!win_ptr)
-        error("Malloc Error\n");
-    mlx_loop(mlx_ptr);
-    return (0);
-    
-}*/
+}
