@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 11:22:38 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/29 11:56:40 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/30 17:06:34 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,34 @@ int	main()//int argc, char *argv[])
 
     void *mlx_ptr;
     void *win_ptr;
+	void *moon;
+	void *astro;
+	void *rock;
+	void *star;
+	int width;
+	int height;
+
+	width = 500;
+	height = 500;
 
     mlx_ptr = mlx_init();
     if (!mlx_ptr)
         error("Malloc Error\n");
-    win_ptr = mlx_new_window(mlx_ptr, 300, 300, "SOOOO LOOOONG!");
+	moon = mlx_xpm_file_to_image(mlx_ptr, "img/moon64.xpm", &width, &height);
+	astro = mlx_xpm_file_to_image(mlx_ptr, "img/astro64.xpm", &width, &height); 
+	rock = mlx_xpm_file_to_image(mlx_ptr, "img/rock64.xpm", &width, &height);
+	star = mlx_xpm_file_to_image(mlx_ptr, "img/star32.xpm", &width, &height);  
+    win_ptr = mlx_new_window(mlx_ptr, 500, 500, "SOOOO LOOOONG!");
     if (!win_ptr)
         error("Malloc Error\n");
+	mlx_put_image_to_window(mlx_ptr, win_ptr, moon, 0, 0);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, moon, 64, 0);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, moon, 0, 64);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, astro, 64, 0);	
+	mlx_put_image_to_window(mlx_ptr, win_ptr, rock, 0, 0);
+	mlx_put_image_to_window(mlx_ptr, win_ptr, star, 16, 80);
+
+
     mlx_loop(mlx_ptr);
     return (0);
-    
 }
