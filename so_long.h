@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 01:08:23 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/30 15:53:04 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/30 18:00:47 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,26 @@ typedef struct s_vector
 	int	x;
 	int	y;
 } t_vec;
+
 typedef	struct s_mapdata
 {
+	char 	**maparray;
 	int		width;
 	int		height;
-	int		point_row;
-	int		point_column;
 	t_vec	player;
 	t_vec	exit;
 	int		n_player;
 	int		n_exit;
 	int		n_collect;
 }	t_mapdata;
+
+typedef struct s_game
+{
+	void 		*mlx_ptr;
+	void 		*win_ptr;
+	t_mapdata	mapdata;
+
+}	t_game;
 
 /* mapchecker.c */
 void	error(char *message);
@@ -48,8 +56,8 @@ void	free_error(char *message, char** array);
 
 /* flood fill.c */
 void	fill(char **array, t_mapdata *data, int x, int y);
-void	ff_map(char **maparray, t_mapdata *data);
-void	check_path(char **maparray, t_mapdata *data);
+void	ff_map(char **array, t_mapdata *data);
+void	check_path(t_mapdata *data);
 
 /* minilibx.c */
 
