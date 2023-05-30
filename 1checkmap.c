@@ -6,17 +6,10 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/29 11:58:01 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/30 17:07:03 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include "get_next_line.h"
 #include "so_long.h"
 
 /* helper functions */
