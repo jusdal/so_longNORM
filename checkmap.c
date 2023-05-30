@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkmap.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdaly <jdaly@student.42bangkok.com>        +#+  +:+       +#+        */
+/*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/29 00:01:19 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/30 17:27:06 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ typedef	struct s_mapdata
 {
 	int		width;
 	int		height;
-	int		point_row;
-	int		point_column;
 	t_vec	player;
 	t_vec	exit;
 	int		n_player;
@@ -150,8 +148,6 @@ void	init_mapdata(t_mapdata *data, char **maparray, char *mapfile)
 {
 	data->width = strlen_no_newline(maparray[0]);
 	data->height = count_rows(mapfile);
-	data->point_row = 0;
-	data->point_column = 0;
 	data->n_player = 0;
 	data->n_exit = 0;
 	data->n_collect = 0;
