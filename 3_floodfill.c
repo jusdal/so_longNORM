@@ -1,32 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   floodfill.c                                        :+:      :+:    :+:   */
+/*   3_floodfill.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 00:01:39 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/30 18:04:35 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 16:53:53 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-static char	*ft_strdup(char *str)
-{
-	int		len;
-	char	*ret;
-
-	len = -1;
-	while (str[++len])
-		;
-	ret = (char *)malloc(len + 1);
-	len = 0;
-	while (*str)
-		ret[len++] = *str++;
-	ret[len] = 0;
-	return (ret);
-}
 
 char	**dup_map(t_mapdata *data)
 {
@@ -48,15 +32,10 @@ char	**dup_map(t_mapdata *data)
 
 void	fill(char **array, t_mapdata *data, int column, int row)
 {
-    // Check if current position is out of bounds or a wall
     if (column < 0 || column >= data->width || row < 0 \
 				|| row >= data->height || array[row][column] == '1')
         return ;
-
-    // Mark current position as visited
     array[row][column] = '1';
-
-    // Recursively explore adjacent positions
     fill(array, data, column - 1, row); // go left
     fill(array, data, column + 1, row); // go right
     fill(array, data, column, row - 1); // go down
@@ -75,13 +54,8 @@ void	check_path(t_mapdata *data)
 	int 	row;
 	int 	col;
 
-	//duplicate map
 	mapdup = dup_map(data);
-
-	//fill duplicated map
 	ff_map(mapdup, data);
-
-	//check for C/E
 	row = 0;
 	while (row < data->height)
 	{
@@ -99,7 +73,3 @@ void	check_path(t_mapdata *data)
 	}
 	free_array(mapdup);
 }
-		//if no path
-			//free both maparrays
-		//if path
-			//free filled array
