@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 14:43:27 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 14:59:30 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 19:31:07 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define KEY_W      13
 # define KEY_S      1
 # define KEY_UP     126
-#define KEY_DOWN    125
-#define KEY_LEFT    123
-#define KEY_RIGHT   124
+# define KEY_DOWN    125
+# define KEY_LEFT    123
+# define KEY_RIGHT   124
 
 #endif

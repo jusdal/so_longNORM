@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 01:08:23 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 15:39:42 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 20:16:36 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
-# include <stdio.h> //remove
-# include <string.h> //remove and replace strcmp in 1checkmap.c
-
 
 typedef struct s_vector
 {
@@ -34,12 +31,12 @@ typedef struct s_img
 {
 	void	*img;
 	int		height;
-	int 	width;
+	int		width;
 }	t_img;
 
-typedef	struct s_mapdata
+typedef struct s_mapdata
 {
-	char 	**maparray;
+	char	**maparray;
 	int		width;
 	int		height;
 	t_vec	player;
@@ -51,8 +48,8 @@ typedef	struct s_mapdata
 
 typedef struct s_game
 {
-	void 		*mlx_ptr;
-	void 		*win_ptr;
+	void		*mlx_ptr;
+	void		*win_ptr;
 	t_mapdata	mapdata;
 	int			count;
 	t_vec		move;
@@ -65,23 +62,24 @@ typedef struct s_game
 }	t_game;
 
 /* mapchecker.c */
-void	ft_putstr(char *str);
-void	ft_putnbr(int n);
-void	error(char *message);
-void	free_array(char **array);
-void	free_error(char *message, char** array);
-int		strlen_no_newline(char *str);
-void	check_filetype(int argc, char *mapfile);
-int		count_rows(char *mapfile);
-char	**alloc_map(char *mapfile, int rowcount);
-char	**create_map_array(char *mapfile, int rowcount);
-void	init_mapdata(t_mapdata *data, char *mapfile);
-bool	check_component(char c);
-void	component_count(char c, t_mapdata *data, int row, int column);
-void	component_check(t_mapdata *data);
-bool	check_border(char c, t_mapdata *data, int row, int column);
-void	check_map_all(t_mapdata *data);
-
+void		ft_putstr(char *str);
+void		ft_putnbr(int n);
+int			ft_strcmp(const char *s1, const char *s2);
+char		*ft_strdup(const char *s1);
+void		error(char *message);
+void		free_array(char **array);
+void		free_error(char *message, char **array);
+int			strlen_no_newline(char *str);
+void		check_filetype(int argc, char *mapfile);
+int			count_rows(char *mapfile);
+char		**alloc_map(char *mapfile, int rowcount);
+char		**create_map_array(char *mapfile, int rowcount);
+void		init_mapdata(t_mapdata *data, char *mapfile);
+bool		check_component(char c);
+void		component_count(char c, t_mapdata *data, int row, int column);
+void		component_check(t_mapdata *data);
+bool		check_border(char c, t_mapdata *data, int row, int column);
+void		check_map_all(t_mapdata *data);
 
 /* flood fill.c */
 char		**dup_map(t_mapdata *data);
@@ -90,17 +88,16 @@ void		ff_map(char **array, t_mapdata *data);
 void		check_path(t_mapdata *data);
 
 /* renderwindow.c */
-void	create_images(t_game *gdata);
-void	init_gamedata(t_game *gdata, t_mapdata mdata);
-void    render_map(t_game *gdata);
-void    render_all(t_mapdata mapdata);
+void		create_images(t_game *gdata);
+void		init_gamedata(t_game *gdata, t_mapdata mdata);
+void		render_map(t_game *gdata, int x, int y);
+void		render_all(t_mapdata mapdata);
 
 /* keyhandlers.c */
-int win_close_x(t_game *gdata);
-int key_handler(int keycode, t_game *gdata);
-
+int			key_handler(int keycode, t_game *gdata);
+int			win_close_x(t_game *gdata);
 /* move.c */
-int		validate_move(t_game *gdata, int move_x, int move_y);
-void    move(t_game *gdata, int move_x, int move_y);
+int			validate_move(t_game *gdata, int move_x, int move_y);
+void		move(t_game *gdata, int move_x, int move_y);
 
 #endif

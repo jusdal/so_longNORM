@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 16:41:51 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 16:52:59 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 20:23:38 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_putstr(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -31,7 +31,16 @@ void	ft_putnbr(int n)
 	write(1, &"0123456789"[n % 10], 1);
 }
 
-int strlen_no_newline(char *str)
+int ft_strcmp(const char *s1, const char *s2) {
+    while (*s1 && (*s1 == *s2)) {
+        s1++;
+        s2++;
+    }
+    
+    return *(unsigned char *)s1 - *(unsigned char *)s2;
+}
+
+int	strlen_no_newline(char *str)
 {
 	int	i;
 
@@ -41,31 +50,24 @@ int strlen_no_newline(char *str)
 	return (i);
 }
 
-static char	*ft_strdup(char *str)
+char	*ft_strdup(const char *s1)
 {
-	int		len;
-	char	*ret;
-
-	len = -1;
-	while (str[++len])
-		;
-	ret = (char *)malloc(len + 1);
-	len = 0;
-	while (*str)
-		ret[len++] = *str++;
-	ret[len] = 0;
-	return (ret);
-}
-
-void	free_array(char **array)
-{
-	int	i;
+	char	*str;
+	size_t	i;
+	size_t	len;
 
 	i = 0;
-	while (array[i])
+	len = 0;
+	while (s1[len] != '\0')
+		len++;
+	str = malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (0);
+	while (i < len)
 	{
-		free(array[i]);
+		str[i] = s1[i];
 		i++;
 	}
-	free(array);
+	str[i] = '\0';
+	return (str);
 }

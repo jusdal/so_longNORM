@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 00:01:39 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 16:53:53 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 19:47:16 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ char	**dup_map(t_mapdata *data)
 
 void	fill(char **array, t_mapdata *data, int column, int row)
 {
-    if (column < 0 || column >= data->width || row < 0 \
-				|| row >= data->height || array[row][column] == '1')
-        return ;
-    array[row][column] = '1';
-    fill(array, data, column - 1, row); // go left
-    fill(array, data, column + 1, row); // go right
-    fill(array, data, column, row - 1); // go down
-    fill(array, data, column, row + 1); // go up
+	if (column < 0 || column >= data->width || row < 0 \
+			|| row >= data->height || array[row][column] == '1')
+		return ;
+	array[row][column] = '1';
+	fill(array, data, column - 1, row);
+	fill(array, data, column + 1, row);
+	fill(array, data, column, row - 1);
+	fill(array, data, column, row + 1);
 	return ;
 }
 
@@ -51,8 +51,8 @@ void	ff_map(char **array, t_mapdata *data)
 void	check_path(t_mapdata *data)
 {
 	char	**mapdup;
-	int 	row;
-	int 	col;
+	int		row;
+	int		col;
 
 	mapdup = dup_map(data);
 	ff_map(mapdup, data);

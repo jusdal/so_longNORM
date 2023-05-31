@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 16:49:19 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 20:25:48 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 void	check_filetype(int argc, char *mapfile)
 {
 	int	len;
+	int i;
 
 	if (argc != 2)
-		error("Please inlcude 1 .ber map file as an argument.\n");
-	len = strlen(mapfile);
-	if (strcmp(&mapfile[len - 4], ".ber") != 0)
+		error("Please include 1 .ber map file as an argument.\n");
+	len = 0;
+	i = 0;
+	while (mapfile[i++])
+		len++;
+	if (len < 4 || ft_strcmp(&mapfile[len - 4], ".ber") != 0)
 		error("Invalid map file. Use a .ber file\n");
 }
 
@@ -63,7 +67,7 @@ char	**create_map_array(char *mapfile, int rowcount)
 {
 	char	**map;
 	int		fd;
-	int 	i;
+	int		i;
 
 	i = 0;
 	map = alloc_map(mapfile, rowcount);

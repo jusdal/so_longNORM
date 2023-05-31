@@ -6,16 +6,19 @@
 #    By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/18 22:02:56 by jdaly             #+#    #+#              #
-#    Updated: 2023/05/31 15:16:43 by jdaly            ###   ########.fr        #
+#    Updated: 2023/05/31 20:49:17 by jdaly            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -fsanitize=address -g
 
 
-SRC = main.c 1checkmap.c floodfill.c 3renderwindow.c 4move.c 4keyhandlers.c ./gnl/get_next_line.c ./gnl/get_next_line_utils.c
+SRC = main.c 0_errors.c 0_so_long_utils.c 1_openmap.c 2_checkmap.c 3_floodfill.c \
+	4_renderwindow.c 5_movekeyhandlers.c ./gnl/get_next_line.c \
+	./gnl/get_next_line_utils.c
+
 OBJ = $(SRC:.c=.o)
 
 MLX_DIR	:= ./mlx
@@ -38,12 +41,9 @@ clean:
 	$(MAKE) -C $(MLX_DIR) clean
 	rm -f $(OBJ)
 
-fclean:
+fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
 
 .PHONY: all clean fclean re
-
- #put mlx in mlx folder
- #you need libmlx.dylib in the same directory as build target bc it's a dynamic library
