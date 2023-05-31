@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 11:22:38 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/30 21:47:30 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 13:39:41 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	main(int argc, char *argv[])
 	printf("map[5] = %s\n", data.maparray[5]);
 
 	check_path(&data);
-    render(data);
+    render_all(data);
 
 	free_array(data.maparray);
 	return (0);
