@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/30 21:43:00 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 15:23:53 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@ void	ft_putstr(char *str)
 		i++;
 	}
 }
+
+void	ft_putnbr(int n)
+{
+	if (n >= 10)
+		ft_putnbr(n / 10);
+	write(1, &"0123456789"[n % 10], 1);
+}
+
 void	error(char *message)
 {
 	ft_putstr("Error\n");
