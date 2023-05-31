@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 01:08:23 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/30 23:14:57 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 15:39:42 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "gnl/get_next_line.h"
 # include <fcntl.h>
 # include "mlx/mlx.h"
+# include "key.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdbool.h>
@@ -54,7 +55,7 @@ typedef struct s_game
 	void 		*win_ptr;
 	t_mapdata	mapdata;
 	int			count;
-	t_vector	move;
+	t_vec		move;
 	t_img		img_floor;
 	t_img		img_player;
 	t_img		img_collect;
@@ -65,6 +66,7 @@ typedef struct s_game
 
 /* mapchecker.c */
 void	ft_putstr(char *str);
+void	ft_putnbr(int n);
 void	error(char *message);
 void	free_array(char **array);
 void	free_error(char *message, char** array);
@@ -91,6 +93,14 @@ void		check_path(t_mapdata *data);
 void	create_images(t_game *gdata);
 void	init_gamedata(t_game *gdata, t_mapdata mdata);
 void    render_map(t_game *gdata);
-void    render(t_mapdata mapdata);
+void    render_all(t_mapdata mapdata);
+
+/* keyhandlers.c */
+int win_close_x(t_game *gdata);
+int key_handler(int keycode, t_game *gdata);
+
+/* move.c */
+int		validate_move(t_game *gdata, int move_x, int move_y);
+void    move(t_game *gdata, int move_x, int move_y);
 
 #endif
