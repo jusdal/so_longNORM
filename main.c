@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 11:22:38 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 13:39:41 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 16:07:40 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ int	main(int argc, char *argv[])
 	check_filetype(argc, argv[1]);
 	data.maparray = create_map_array(argv[1], count_rows(argv[1]));
 	init_mapdata(&data, argv[1]);
-
+	/*
 	printf("data.width: %d\n", data.width);
 	printf("data.height: %d\n", data.height);
-
+	*/
 	check_map_all(&data);
-
+	/*
 	printf("data.n_player: %d\n", data.n_player);
 	printf("data.n_exit: %d\n", data.n_exit);
 	printf("data.n_collect: %d\n", data.n_collect);
@@ -99,10 +99,9 @@ int	main(int argc, char *argv[])
 	printf("map[3] = %s", data.maparray[3]);
 	printf("map[4] = %s", data.maparray[4]);
 	printf("map[5] = %s\n", data.maparray[5]);
-
+	*/
 	check_path(&data);
     render_all(data);
-
 	free_array(data.maparray);
 	return (0);
 }
