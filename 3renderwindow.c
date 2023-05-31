@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:58:32 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/30 23:41:25 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/05/31 15:20:36 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void    render_map(t_game *gdata)
         col = 0;
         while (col < gdata->mapdata.width)
         {
-            printf("INSIDE THE LOOP");
             mlx_put_image_to_window(gdata->mlx_ptr, gdata->win_ptr, gdata->img_floor.img, col * 64, row * 64);
             if (gdata->mapdata.maparray[row][col] == 'C')
                 mlx_put_image_to_window(gdata->mlx_ptr, gdata->win_ptr, gdata->img_collect.img, col * 64 + 16, row * 64 + 16);
@@ -70,7 +69,7 @@ void    render_all(t_mapdata mapdata)
         free_error("MiniLibX Error", gamedata.mapdata.maparray);
     create_images(&gamedata);
     render_map(&gamedata);
-    mlx_hook(gamedata.win_ptr, key_hook, gamedata);
-    //keyhook
+    mlx_hook(gamedata.win_ptr, 17, 1L<<0, win_close_x, &gamedata);
+    mlx_key_hook(gamedata.win_ptr, key_handler, &gamedata);
     mlx_loop(gamedata.mlx_ptr);
 }
