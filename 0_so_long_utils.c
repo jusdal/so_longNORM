@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 16:41:51 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 20:23:38 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/01 16:32:49 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@ void	ft_putnbr(int n)
 	write(1, &"0123456789"[n % 10], 1);
 }
 
-int ft_strcmp(const char *s1, const char *s2) {
-    while (*s1 && (*s1 == *s2)) {
-        s1++;
-        s2++;
-    }
-    
-    return *(unsigned char *)s1 - *(unsigned char *)s2;
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	while (*s1 && (*s1 == *s2))
+	{
+		s1++;
+		s2++;
+	}
+	return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }
 
 int	strlen_no_newline(char *str)
