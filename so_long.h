@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 01:08:23 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 20:16:36 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/01 18:17:51 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int			count_rows(char *mapfile);
 char		**alloc_map(char *mapfile, int rowcount);
 char		**create_map_array(char *mapfile, int rowcount);
 void		init_mapdata(t_mapdata *data, char *mapfile);
-bool		check_component(char c);
+bool		check_char(char c);
 void		component_count(char c, t_mapdata *data, int row, int column);
-void		component_check(t_mapdata *data);
+void		check_component(t_mapdata *data);
 bool		check_border(char c, t_mapdata *data, int row, int column);
 void		check_map_all(t_mapdata *data);
 
@@ -91,7 +91,7 @@ void		check_path(t_mapdata *data);
 void		create_images(t_game *gdata);
 void		init_gamedata(t_game *gdata, t_mapdata mdata);
 void		render_map(t_game *gdata, int x, int y);
-void		render_all(t_mapdata mapdata);
+void		render_all(t_game *gdata);
 
 /* keyhandlers.c */
 int			key_handler(int keycode, t_game *gdata);
