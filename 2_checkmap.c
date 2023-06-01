@@ -6,13 +6,13 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 16:47:16 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 17:18:50 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/01 17:15:23 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-bool	check_component(char c)
+bool	check_char(char c)
 {
 	if (c == '0' || c == '1' || c == 'C' || c == 'E' || c == 'P')
 		return (true);
@@ -38,7 +38,7 @@ void	component_count(char c, t_mapdata *data, int row, int column)
 	}
 }
 
-void	component_check(t_mapdata *data)
+void	check_component(t_mapdata *data)
 {
 	if (data->n_collect < 1)
 		free_error("Map must contain at least 1 collectable\n", data->maparray);
@@ -74,7 +74,7 @@ void	check_map_all(t_mapdata *data)
 		col = 0;
 		while (col < data->width)
 		{
-			if (!check_component(data->maparray[row][col]))
+			if (!check_char(data->maparray[row][col]))
 				free_error("Invalid character. Please use only 1,0,P,E,C\n", \
 					data->maparray);
 			if (!check_border(data->maparray[row][col], data, row, col))
@@ -85,5 +85,5 @@ void	check_map_all(t_mapdata *data)
 		}
 		row++;
 	}
-	component_check(data);
+	check_component(data);
 }
