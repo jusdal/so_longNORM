@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:30:17 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 20:07:43 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/01 16:59:02 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	validate_move(t_game *gdata, int move_x, int move_y)
 	char	pos;
 
 	pos = gdata->mapdata.maparray[move_y][move_x];
-	if (pos == '0')
-		return (1);
 	if (pos == 'C')
 	{
 		gdata->mapdata.n_collect--;
@@ -30,8 +28,8 @@ int	validate_move(t_game *gdata, int move_x, int move_y)
 		ft_putstr("*****YOU WIN*****\n");
 		return (3);
 	}
-	else if (pos == 'E')
-		return (4);
+	else if (pos == 'E' || pos == '0')
+		return (1);
 	else
 		return (0);
 }
