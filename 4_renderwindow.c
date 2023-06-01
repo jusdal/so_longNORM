@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:58:32 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 17:46:49 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/01 18:18:43 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,24 @@ void	create_images(t_game *gdata)
 	gdata->img_collect.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
 			"img/star32.xpm", &gdata->img_collect.height, \
 			&gdata->img_collect.height);
+	if (!gdata->img_collect.img)
+		free_error("MiniLibX Error", gdata->mapdata.maparray);
 	gdata->img_player.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
 			"img/astro64.xpm", &height, &height);
+	if (!gdata->img_player.img)
+		free_error("MiniLibX Error", gdata->mapdata.maparray);
 	gdata->img_floor.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
 			"img/moon64.xpm", &height, &height);
+	if (!gdata->img_floor.img)
+		free_error("MiniLibX Error", gdata->mapdata.maparray);
 	gdata->img_wall.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
 			"img/rock64.xpm", &height, &height);
+	if (!gdata->img_wall.img)
+		free_error("MiniLibX Error", gdata->mapdata.maparray);
 	gdata->img_exit.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
 			"img/rocket64.xpm", &height, &height);
+	if (!gdata->img_exit.img)
+		free_error("MiniLibX Error", gdata->mapdata.maparray);
 }
 
 void	render_map(t_game *gdata, int row, int col)
@@ -58,21 +68,18 @@ void	render_map(t_game *gdata, int row, int col)
 	}
 }
 
-void	render_all(t_mapdata mapdata)
+void	render_all(t_game *gdata)
 {
-	t_game	gamedata;
-
-	gamedata.mapdata = mapdata;
-	gamedata.mlx_ptr = mlx_init();
-	if (!gamedata.mlx_ptr)
-		free_error("MiniLibX Error", gamedata.mapdata.maparray);
-	gamedata.win_ptr = mlx_new_window(gamedata.mlx_ptr, gamedata.mapdata.width \
-			* 64, gamedata.mapdata.height * 64, "SO LOOOONG!");
-	if (!gamedata.win_ptr)
-		free_error("MiniLibX Error", gamedata.mapdata.maparray);
-	create_images(&gamedata);
-	render_map(&gamedata, 0, 0);
-	mlx_hook(gamedata.win_ptr, 17, 1L << 0, win_close_x, &gamedata);
-	mlx_key_hook(gamedata.win_ptr, key_handler, &gamedata);
-	mlx_loop(gamedata.mlx_ptr);
+	gdata->mlx_ptr = mlx_init();
+	if (!gdata->mlx_ptr)
+		free_error("MiniLibX Error", gdata->mapdata.maparray);
+	gdata->win_ptr = mlx_new_window(gdata->mlx_ptr, gdata->mapdata.width \
+			* 64, gdata->mapdata.height * 64, "SO LOOOONG!");
+	if (!gdata->win_ptr)
+		free_error("MiniLibX Error", gdata->mapdata.maparray);
+	create_images(gdata);
+	render_map(gdata, 0, 0);
+	mlx_hook(gdata->win_ptr, 17, 0L, win_close_x, gdata);
+	mlx_key_hook(gdata->win_ptr, key_handler, gdata);
+	mlx_loop(gdata->mlx_ptr);
 }
