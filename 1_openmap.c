@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:53:58 by jdaly             #+#    #+#             */
-/*   Updated: 2023/05/31 20:25:48 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/01 16:33:14 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	check_filetype(int argc, char *mapfile)
 {
 	int	len;
-	int i;
+	int	i;
 
 	if (argc != 2)
 		error("Please include 1 .ber map file as an argument.\n");
