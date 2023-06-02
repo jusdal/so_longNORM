@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   2_checkmap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
+/*   By: justindaly <justindaly@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 16:47:16 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/01 17:15:23 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/03 01:46:02 by justindaly       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,17 @@ void	check_map_all(t_mapdata *data)
 	int	col;
 	int	row;
 
+	if (strlen_no_newline(data->maparray[data->height - 1]) == 0) // check for new line at bottom of map
+	{
+		free(data->maparray[data->height - 1]);
+		data->maparray[data->height - 1] = NULL;
+		data->height--;
+	}
 	row = 0;
 	while (row < data->height)
 	{
+		/*if (strlen_no_newline(data->maparray[data->height - 1]) == 0)
+			free_error("Remove \\n from last line\n", data->maparray);*/
 		if (strlen_no_newline(data->maparray[row]) != data->width)
 			free_error("Map must be rectangular\n", data->maparray);
 		col = 0;
