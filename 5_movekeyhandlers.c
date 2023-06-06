@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 13:30:17 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/01 16:59:02 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/06 17:41:07 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,16 @@ void	move(t_game *gdata, int move_x, int move_y)
 
 int	win_close_x(t_game *gdata)
 {
-	mlx_destroy_image(gdata->mlx_ptr, gdata->img_floor.img);
-	mlx_destroy_image(gdata->mlx_ptr, gdata->img_collect.img);
-	mlx_destroy_image(gdata->mlx_ptr, gdata->img_player.img);
-	mlx_destroy_image(gdata->mlx_ptr, gdata->img_wall.img);
-	mlx_destroy_image(gdata->mlx_ptr, gdata->img_exit.img);
+	if (gdata->img_floor.img)
+		mlx_destroy_image(gdata->mlx_ptr, gdata->img_floor.img);
+	if (gdata->img_collect.img)
+		mlx_destroy_image(gdata->mlx_ptr, gdata->img_collect.img);
+	if (gdata->img_player.img)
+		mlx_destroy_image(gdata->mlx_ptr, gdata->img_player.img);
+	if (gdata->img_wall.img)
+		mlx_destroy_image(gdata->mlx_ptr, gdata->img_wall.img);
+	if (gdata->img_exit.img)
+		mlx_destroy_image(gdata->mlx_ptr, gdata->img_exit.img);
 	mlx_destroy_window(gdata->mlx_ptr, gdata->win_ptr);
 	free_array(gdata->mapdata.maparray);
 	free(gdata->mlx_ptr);
