@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   3_floodfill.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justindaly <justindaly@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 00:01:39 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/03 01:49:37 by justindaly       ###   ########.fr       */
+/*   Updated: 2023/06/06 11:27:41 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ void	floodfill(char **array, t_mapdata *data, int column, int row)
 			|| row >= data->height || array[row][column] == '1')
 		return ;
 	array[row][column] = '1';
-	fill(array, data, column - 1, row);
-	fill(array, data, column + 1, row);
-	fill(array, data, column, row - 1);
-	fill(array, data, column, row + 1);
+	floodfill(array, data, column - 1, row);
+	floodfill(array, data, column + 1, row);
+	floodfill(array, data, column, row - 1);
+	floodfill(array, data, column, row + 1);
 	return ;
 }
 
@@ -70,11 +70,11 @@ void	check_path(t_mapdata *data)
 	row = 0;
 	while (mapdup[row])
 	{
-		printf("map[%d] = %s\n", row, mapdup[row]);
+		//printf("map[%d] = %s\n", row, mapdup[row]);
 		col = 0;
 		while (col < data->width) //problem was here
 		{
-			printf("mapdup[%d][%d] = %c\n", row, col, mapdup[row][col]);
+			//printf("mapdup[%d][%d] = %c\n", row, col, mapdup[row][col]);
 			if (mapdup[row][col] == 'C' || mapdup[row][col] == 'E')
 			{
 				free_array(mapdup);
