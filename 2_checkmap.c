@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 16:47:16 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/06 11:35:31 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/06 12:00:58 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,7 @@ void	check_map_all(t_mapdata *data)
 	int	col;
 	int	row;
 
-	if (strlen_no_newline(data->maparray[data->height - 1]) == 0) // check for new line at bottom of map
-	{
-		free(data->maparray[data->height - 1]);
-		data->maparray[data->height - 1] = NULL;
-		data->height--;
-	}
+	check_last_row(data);
 	row = 0;
 	while (row < data->height)
 	{
