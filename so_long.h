@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 01:08:23 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/01 18:17:51 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/06 11:25:54 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ void		check_map_all(t_mapdata *data);
 
 /* flood fill.c */
 char		**dup_map(t_mapdata *data);
-void		fill(char **array, t_mapdata *data, int x, int y);
-void		ff_map(char **array, t_mapdata *data);
+void		floodfill(char **array, t_mapdata *data, int x, int y);
 void		check_path(t_mapdata *data);
 
 /* renderwindow.c */
