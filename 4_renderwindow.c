@@ -6,39 +6,40 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 19:58:32 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/01 18:18:43 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/06 15:30:13 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void	init_images(t_game *gdata)
+{
+	gdata->img_collect.img = NULL;
+	gdata->img_player.img = NULL;
+	gdata->img_floor.img = NULL;
+	gdata->img_wall.img = NULL;
+	gdata->img_exit.img = NULL;
+}
+
 void	create_images(t_game *gdata)
 {
-	int	height;
-
-	height = 64;
-	gdata->img_collect.height = 32;
 	gdata->img_collect.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
-			"img/star32.xpm", &gdata->img_collect.height, \
+			"img/star32.xpm", &gdata->img_collect.width, \
 			&gdata->img_collect.height);
-	if (!gdata->img_collect.img)
-		free_error("MiniLibX Error", gdata->mapdata.maparray);
 	gdata->img_player.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
-			"img/astro64.xpm", &height, &height);
-	if (!gdata->img_player.img)
-		free_error("MiniLibX Error", gdata->mapdata.maparray);
+			"img/astro64.xpm", &gdata->img_player.width, &gdata->img_player.height);
 	gdata->img_floor.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
-			"img/moon64.xpm", &height, &height);
-	if (!gdata->img_floor.img)
-		free_error("MiniLibX Error", gdata->mapdata.maparray);
+			"img/moon64.xpm", &gdata->img_floor.width, &gdata->img_floor.height);
 	gdata->img_wall.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
-			"img/rock64.xpm", &height, &height);
-	if (!gdata->img_wall.img)
-		free_error("MiniLibX Error", gdata->mapdata.maparray);
+			"img/rock64.xpm", &gdata->img_wall.width, &gdata->img_wall.height);
 	gdata->img_exit.img = mlx_xpm_file_to_image(gdata->mlx_ptr, \
-			"img/rocket64.xpm", &height, &height);
-	if (!gdata->img_exit.img)
-		free_error("MiniLibX Error", gdata->mapdata.maparray);
+			"img/rocket64.xpm", &gdata->img_exit.width, &gdata->img_exit.height);
+	if (!gdata->img_collect.img || !gdata->img_player.img || !gdata->img_floor.img || 
+		!gdata->img_wall.img || !gdata->img_exit.img)
+		{
+			ft_putstr("Error\nMiniLibX Error\n");
+			win_close_x(gdata);
+		}
 }
 
 void	render_map(t_game *gdata, int row, int col)
@@ -77,6 +78,7 @@ void	render_all(t_game *gdata)
 			* 64, gdata->mapdata.height * 64, "SO LOOOONG!");
 	if (!gdata->win_ptr)
 		free_error("MiniLibX Error", gdata->mapdata.maparray);
+	init_images(gdata);
 	create_images(gdata);
 	render_map(gdata, 0, 0);
 	mlx_hook(gdata->win_ptr, 17, 0L, win_close_x, gdata);
