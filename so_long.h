@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/28 01:08:23 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/06 11:25:54 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/06 12:15:33 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,42 +61,47 @@ typedef struct s_game
 
 }	t_game;
 
-/* mapchecker.c */
+/* 0_so_long_utils.c */
 void		ft_putstr(char *str);
 void		ft_putnbr(int n);
 int			ft_strcmp(const char *s1, const char *s2);
+int			strlen_no_newline(char *str);
 char		*ft_strdup(const char *s1);
+
+/* 0_errors.c */
 void		error(char *message);
 void		free_array(char **array);
 void		free_error(char *message, char **array);
-int			strlen_no_newline(char *str);
+void		check_last_row(t_mapdata *data);
+
+/* 1_openmap.c */
 void		check_filetype(int argc, char *mapfile);
 int			count_rows(char *mapfile);
 char		**alloc_map(char *mapfile, int rowcount);
 char		**create_map_array(char *mapfile, int rowcount);
 void		init_mapdata(t_mapdata *data, char *mapfile);
+
+/* 2_checkmap.c */
 bool		check_char(char c);
 void		component_count(char c, t_mapdata *data, int row, int column);
 void		check_component(t_mapdata *data);
 bool		check_border(char c, t_mapdata *data, int row, int column);
 void		check_map_all(t_mapdata *data);
 
-/* flood fill.c */
+/* 3_floodfill.c */
 char		**dup_map(t_mapdata *data);
 void		floodfill(char **array, t_mapdata *data, int x, int y);
 void		check_path(t_mapdata *data);
 
-/* renderwindow.c */
+/* 4_renderwindow.c */
 void		create_images(t_game *gdata);
-void		init_gamedata(t_game *gdata, t_mapdata mdata);
 void		render_map(t_game *gdata, int x, int y);
 void		render_all(t_game *gdata);
 
-/* keyhandlers.c */
-int			key_handler(int keycode, t_game *gdata);
-int			win_close_x(t_game *gdata);
-/* move.c */
+/* 5_movekeyhandlers.c */
 int			validate_move(t_game *gdata, int move_x, int move_y);
 void		move(t_game *gdata, int move_x, int move_y);
+int			win_close_x(t_game *gdata);
+int			key_handler(int keycode, t_game *gdata);
 
 #endif

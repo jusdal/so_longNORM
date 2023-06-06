@@ -6,22 +6,30 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 00:01:39 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/06 11:27:41 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/06 16:07:02 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include <stdio.h> //remove later
 
-void print_array(char **arr, int height, int width) 
+void	print_array(char **arr, int height, int width)
 {
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            printf("%c", arr[i][j]);
-        }
-        printf("\n");
-    }
-	printf("-----------\n");
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < height)
+	{
+		j = 0;
+		while (j < width)
+		{
+			write(1, &arr[i][j], 1);
+			j++;
+		}
+		write(1, "\n", 1);
+		i++;
+	}
+	ft_putstr("\n-----------\n");
 }
 
 char	**dup_map(t_mapdata *data)
@@ -33,12 +41,12 @@ char	**dup_map(t_mapdata *data)
 	if (!mapdup)
 		error("Malloc Error\n");
 	row = 0;
-	while (row < data->height)
+	while (data->maparray[row])
 	{
 		mapdup[row] = ft_strdup(data->maparray[row]);
 		row++;
 	}
-	print_array(mapdup, data->height, data->width); //remove
+	print_array(mapdup, data->height, data->width);
 	mapdup[row] = 0;
 	return (mapdup);
 }
@@ -64,17 +72,13 @@ void	check_path(t_mapdata *data)
 
 	mapdup = dup_map(data);
 	floodfill(mapdup, data, data->player.x, data->player.y);
-	print_array(mapdup, data->height, data->width); //remove
-	printf("height = %d\n", data->height);
-	printf("width = %d\n", data->width);
+	print_array(mapdup, data->height, data->width);
 	row = 0;
 	while (mapdup[row])
 	{
-		//printf("map[%d] = %s\n", row, mapdup[row]);
 		col = 0;
-		while (col < data->width) //problem was here
+		while (col < data->width)
 		{
-			//printf("mapdup[%d][%d] = %c\n", row, col, mapdup[row][col]);
 			if (mapdup[row][col] == 'C' || mapdup[row][col] == 'E')
 			{
 				free_array(mapdup);
