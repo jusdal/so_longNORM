@@ -6,7 +6,7 @@
 /*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 16:47:16 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/06 12:00:58 by jdaly            ###   ########.fr       */
+/*   Updated: 2023/06/06 19:08:18 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ void	check_component(t_mapdata *data)
 {
 	if (data->n_collect < 1)
 		free_error("Map must contain at least 1 collectable\n", data->maparray);
-	if (data->n_player != 1)
+	if (data->n_player > 1)
 		free_error("Map must contain only 1 player\n", data->maparray);
+	if (data->n_player < 1)
+		free_error("Map must contain 1 player\n", data->maparray);
 	if (data->n_exit < 1)
 		free_error("Map must contain 1 exit\n", data->maparray);
 	if (data->n_exit > 1)
