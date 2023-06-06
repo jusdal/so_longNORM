@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   0_so_long_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: justindaly <justindaly@student.42.fr>      +#+  +:+       +#+        */
+/*   By: jdaly <jdaly@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 16:41:51 by jdaly             #+#    #+#             */
-/*   Updated: 2023/06/02 15:58:07 by justindaly       ###   ########.fr       */
+/*   Updated: 2023/06/06 12:11:51 by jdaly            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 int	strlen_no_newline(char *str)
 {
 	int	i;
+
 	if (!str)
 		return (0);
 	i = 0;
